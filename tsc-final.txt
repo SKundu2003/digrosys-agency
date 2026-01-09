@@ -1,0 +1,4 @@
+src/components/ui/neural-network-hero.tsx(106,33): error TS2322: Type 'RefObject<CPPNShaderMaterialType>' is not assignable to type '((RefObject<HTMLElement | null> | ((instance: HTMLElement | null) => void | (() => VoidOrUndefinedOnly))) & (((instance: CPPNShaderMaterialType | null) => void | (() => VoidOrUndefinedOnly)) | RefObject<...>)) | null | undefined'.
+  Type 'RefObject<CPPNShaderMaterialType>' is not assignable to type '((instance: HTMLElement | null) => void | (() => VoidOrUndefinedOnly)) & RefObject<CPPNShaderMaterialType | null>'.
+    Type 'RefObject<CPPNShaderMaterialType>' is not assignable to type '(instance: HTMLElement | null) => void | (() => VoidOrUndefinedOnly)'.
+      Type 'RefObject<CPPNShaderMaterialType>' provides no match for the signature '(instance: HTMLElement | null): void | (() => VoidOrUndefinedOnly)'.
