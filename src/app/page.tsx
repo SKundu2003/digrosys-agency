@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
+import { getCalApi } from '@calcom/embed-react';
 import Hero from '@/components/ui/neural-network-hero';
 import {
   AlertTriangle,
@@ -196,6 +197,19 @@ const processRoadmap = [
 
 // ===================== MAIN PAGE COMPONENT =====================
 export default function HomePage() {
+  // Initialize Cal.com embed
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: '30min' });
+      cal('ui', {
+        theme: 'dark',
+        cssVarsPerTheme: { dark: { 'cal-brand': '#06b6d4' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    })();
+  }, []);
+
   return (
     <main className="bg-slate-950 text-white antialiased">
       {/* ───────────── HERO ───────────── */}
@@ -443,13 +457,14 @@ export default function HomePage() {
               Let&apos;s map out the digital infrastructure your business needs to scale predictably and profitably.
             </p>
 
-            <a
-              href="#"
-              className="group inline-flex items-center gap-3 rounded-xl bg-cyan-500 px-10 py-4 text-lg font-semibold text-black transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]"
+            <button
+              data-cal-link="souvik-kundu-y0tdcc/30min"
+              data-cal-config='{"layout":"month_view"}'
+              className="group inline-flex items-center gap-3 rounded-xl bg-cyan-500 px-10 py-4 text-lg font-semibold text-black transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] cursor-pointer"
             >
               Book Your Growth Consultation
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </a>
+            </button>
 
             <p className="mt-6 text-sm text-slate-500">
               Free 30-minute strategy session. No strings attached.

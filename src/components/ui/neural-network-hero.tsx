@@ -406,18 +406,35 @@ export default function Hero({
 
                 {/* CTA Buttons */}
                 <div ref={ctaRef} className="flex flex-wrap items-center gap-4 pt-4">
-                    {ctaButtons.map((button, index) => (
-                        <a
-                            key={index}
-                            href={button.href}
-                            className={`rounded-xl px-8 py-3.5 text-sm font-medium transition-all duration-300 ${button.primary
-                                ? 'bg-cyan-500 text-black shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]'
-                                : 'border border-slate-700 bg-slate-900/50 text-white backdrop-blur-sm hover:border-cyan-500/50 hover:bg-slate-800/50'
-                                }`}
-                        >
-                            {button.text}
-                        </a>
-                    ))}
+                    {ctaButtons.map((button, index) => {
+                        const isBookingButton = button.primary && button.text.toLowerCase().includes('book');
+
+                        if (isBookingButton) {
+                            return (
+                                <button
+                                    key={index}
+                                    data-cal-link="souvik-kundu-y0tdcc/30min"
+                                    data-cal-config='{"layout":"month_view"}'
+                                    className="rounded-xl px-8 py-3.5 text-sm font-medium transition-all duration-300 bg-cyan-500 text-black shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] cursor-pointer"
+                                >
+                                    {button.text}
+                                </button>
+                            );
+                        }
+
+                        return (
+                            <a
+                                key={index}
+                                href={button.href}
+                                className={`rounded-xl px-8 py-3.5 text-sm font-medium transition-all duration-300 ${button.primary
+                                    ? 'bg-cyan-500 text-black shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]'
+                                    : 'border border-slate-700 bg-slate-900/50 text-white backdrop-blur-sm hover:border-cyan-500/50 hover:bg-slate-800/50'
+                                    }`}
+                            >
+                                {button.text}
+                            </a>
+                        );
+                    })}
                 </div>
 
                 {/* Micro Details */}
