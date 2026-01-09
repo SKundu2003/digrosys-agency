@@ -203,7 +203,10 @@ export default function HomePage() {
       const cal = await getCalApi({ namespace: '30min' });
       cal('ui', {
         theme: 'dark',
-        cssVarsPerTheme: { dark: { 'cal-brand': '#06b6d4' } },
+        cssVarsPerTheme: {
+          dark: { 'cal-brand': '#06b6d4' },
+          light: { 'cal-brand': '#06b6d4' },
+        },
         hideEventTypeDetails: false,
         layout: 'month_view',
       });
