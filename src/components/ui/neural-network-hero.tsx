@@ -179,9 +179,7 @@ function PlexusNetwork() {
                 <bufferGeometry>
                     <bufferAttribute
                         attach="attributes-position"
-                        count={PARTICLE_COUNT}
-                        array={positions}
-                        itemSize={3}
+                        args={[positions, 3]}
                     />
                 </bufferGeometry>
                 <pointsMaterial
@@ -200,15 +198,11 @@ function PlexusNetwork() {
                 <bufferGeometry>
                     <bufferAttribute
                         attach="attributes-position"
-                        count={maxConnections * 2}
-                        array={linePositions}
-                        itemSize={3}
+                        args={[linePositions, 3]}
                     />
                     <bufferAttribute
                         attach="attributes-color"
-                        count={maxConnections * 2}
-                        array={lineColors}
-                        itemSize={3}
+                        args={[lineColors, 3]}
                     />
                 </bufferGeometry>
                 <lineBasicMaterial
