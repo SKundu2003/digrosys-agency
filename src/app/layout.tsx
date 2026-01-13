@@ -119,13 +119,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Hidden Netlify Form for build-time detection */}
-        <form name="service-lead" data-netlify="true" hidden>
-          <input type="text" name="name" />
-          <input type="tel" name="phone" />
-          <input type="text" name="service" />
-        </form>
-
         {children}
 
         {/* Google Analytics 4 */}
