@@ -63,7 +63,7 @@ export default function LeadCaptureModal({ isOpen, onClose, serviceName }: LeadC
         formData.append('service', serviceName);
 
         try {
-            const response = await fetch('/', {
+            const response = await fetch('/__forms.html', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
