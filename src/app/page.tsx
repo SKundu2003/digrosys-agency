@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
 import { getCalApi } from '@calcom/embed-react';
 import Hero from '@/components/ui/neural-network-hero';
+import LeadCaptureModal from '@/components/ui/lead-capture-modal';
 import {
   AlertTriangle,
   Smartphone,
@@ -20,9 +21,9 @@ import {
   Settings,
   Bot,
   Cpu,
-  Network,
-  Workflow,
 } from 'lucide-react';
+import ContactSection from '@/components/ui/contact-section';
+import { MessageSquare } from 'lucide-react';
 
 // ===================== ANIMATION VARIANTS =====================
 const fadeInUp: Variants = {
@@ -113,6 +114,7 @@ const servicesEcosystem = [
     borderColor: 'border-cyan-500/20',
     hoverBorder: 'hover:border-cyan-500/40',
     iconBg: 'bg-cyan-500/10',
+    pricing: 'Starting at ₹5,000',
     features: [
       { name: 'Landing Pages', detail: 'Ads & Lead Gen Focus' },
       { name: 'Corporate Growth Sites', detail: 'Scalable Architecture' },
@@ -128,6 +130,7 @@ const servicesEcosystem = [
     borderColor: 'border-violet-500/20',
     hoverBorder: 'hover:border-violet-500/40',
     iconBg: 'bg-violet-500/10',
+    pricing: 'Starting at ₹60,000',
     features: [
       { name: 'MVP Development', detail: 'Launch in 6-8 weeks' },
       { name: 'Full Business Apps', detail: 'Admin panels, Role-based access' },
@@ -143,6 +146,7 @@ const servicesEcosystem = [
     borderColor: 'border-emerald-500/20',
     hoverBorder: 'hover:border-emerald-500/40',
     iconBg: 'bg-emerald-500/10',
+    pricing: 'Starting at ₹10,000/mo',
     features: [
       { name: 'Foundation Setup', detail: 'GA4, Pixel, Funnel Mapping' },
       { name: 'Acquisition', detail: 'Google/Meta Ads' },
@@ -158,7 +162,7 @@ const servicesEcosystem = [
     borderColor: 'border-orange-500/20',
     hoverBorder: 'hover:border-orange-500/40',
     iconBg: 'bg-orange-500/10',
-    pricingHint: 'Starter from ₹25,000',
+    pricing: 'Starting at ₹25,000',
     features: [
       { name: '24/7 AI Chatbots', detail: 'Qualify & Book Leads Automatically' },
       { name: 'Workflow Automation', detail: 'HR, Invoicing, Data Entry' },
@@ -197,6 +201,9 @@ const processRoadmap = [
 
 // ===================== MAIN PAGE COMPONENT =====================
 export default function HomePage() {
+  // State for lead capture modal
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+
   // Initialize Cal.com embed
   useEffect(() => {
     (async function () {
@@ -346,8 +353,17 @@ export default function HomePage() {
               >
                 {/* Card Header */}
                 <div className="border-b border-slate-800/50 p-5 sm:p-6 lg:p-8">
-                  <div className={`mb-4 sm:mb-6 inline-flex rounded-xl sm:rounded-2xl bg-gradient-to-br ${service.gradient} p-3 sm:p-4 shadow-lg`}>
-                    <service.icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-white" />
+                  <div className="flex items-start justify-between gap-3 mb-4 sm:mb-6">
+                    <div className={`inline-flex rounded-xl sm:rounded-2xl bg-gradient-to-br ${service.gradient} p-3 sm:p-4 shadow-lg`}>
+                      <service.icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-white" />
+                    </div>
+
+                    {/* Pricing Badge */}
+                    {service.pricing && (
+                      <span className="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 rounded-full px-3 py-1 text-xs sm:text-sm font-medium whitespace-nowrap">
+                        {service.pricing}
+                      </span>
+                    )}
                   </div>
 
                   <p className="mb-1.5 sm:mb-2 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -359,7 +375,7 @@ export default function HomePage() {
 
                 {/* Card Features */}
                 <div className="p-5 pt-4 sm:p-6 sm:pt-5 lg:p-8 lg:pt-6">
-                  <ul className="space-y-3 sm:space-y-4">
+                  <ul className="space-y-3 sm:space-y-4 mb-5">
                     {service.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-2.5 sm:gap-3">
                         <ShieldCheck className="mt-0.5 h-4 w-4 sm:h-5 sm:w-5 shrink-0 text-cyan-400/70" />
@@ -370,6 +386,15 @@ export default function HomePage() {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Enquire Now Button */}
+                  <button
+                    onClick={() => setSelectedService(service.category)}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-3 text-sm font-semibold text-cyan-400 transition-all duration-300 hover:bg-cyan-500/20 hover:border-cyan-500/50 min-h-[44px]"
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                    Enquire Now
+                  </button>
                 </div>
 
                 {/* Hover Glow */}
@@ -476,6 +501,9 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
+      {/* ───────────── GET IN TOUCH SECTION ───────────── */}
+      <ContactSection />
+
       {/* ───────────── FOOTER ───────────── */}
       <footer className="border-t border-slate-800 py-8 sm:py-12">
         <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
@@ -493,6 +521,13 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Lead Capture Modal */}
+      <LeadCaptureModal
+        isOpen={selectedService !== null}
+        onClose={() => setSelectedService(null)}
+        serviceName={selectedService || ''}
+      />
     </main>
   );
 }
